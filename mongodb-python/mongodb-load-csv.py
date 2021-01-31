@@ -2,10 +2,11 @@ import pymongo
 import csv
 
 client = pymongo.MongoClient(
-   "<MONGODB INSTANCE>")
-db = client['<MONGO DB DATABASE NAME>']
+   "<MONGODB CONNECTION STRING")
 
-indexes = db['<MONGO DB COLLECTION NAME>']
+db = client['indices_mercado']
+
+indexes = db['indice']
 
 vetor = []
 with open('indexes_data.csv', mode='r') as csv_file:
