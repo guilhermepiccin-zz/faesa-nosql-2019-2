@@ -1,3 +1,5 @@
+(créditos a Manu Mukerji <next2manu@gmail.com>, que é o autor do projeto original: https://github.com/manum/mr-cassandra)
+
 Preparação do Cassandra:
 1. Criar CosmosDB/CassandraAPI na Azure
 2. Capturar e guardar hostname, username e password
@@ -5,7 +7,7 @@ Preparação do Cassandra:
 4. Criar uma tabela chamada 'livro' com uma coluna chamada 'chave' do tipo 'varchar'
 
 Preparação do pacote Java-hadoop:
-1. Baixar o projeto piloto do git (créditos a Manu Mukerji <next2manu@gmail.com>, que é o autor do projeto original)
+1. Baixar o projeto piloto do git 
     O projeto original tinha dependências Maven antigas, além de uma forma de conexão com um Cassandra local, e não compatível com o CosmosDB. As adequações já foram realizadas.
 
 2. Atualizar as strings de conexão com o host, username e password do Cassandra (Cosmos) dentro da classe CassandraHelper.java
@@ -45,3 +47,6 @@ Preparação do pacote Java-hadoop:
     yarn jar faesamod05mapreduce.jar com.example.com.mr_cassandra.MapReduceExample /livros/metamorfose.txt /livros/meta1
     
 14. Validar tabela 'livro' novamente no Cassandra
+
+15. Validar também o arquivo de saída do Mapper
+    hdfs dfs -cat /livros/meta1/*
