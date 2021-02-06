@@ -1,0 +1,10 @@
+hadoop-exercicio/target/faesamod05mapreduce.jar
+hadoop-exercicio/target/mr_cassandra-1.jar
+hadoop-exercicio/target/classes/com/example/com/mr_cassandra/CassandraHelper.class
+hadoop-exercicio/target/classes/com/example/com/mr_cassandra/CassandraTester.class
+hadoop-exercicio/target/classes/com/example/com/mr_cassandra/MapReduceExample.class
+hadoop-exercicio/target/classes/com/example/com/mr_cassandra/MapReduceExample$IntSumReducer.class
+hadoop-exercicio/target/classes/com/example/com/mr_cassandra/MapReduceExample$TokenizerMapper.class
+hadoop-exercicio/target/maven-archiver/pom.properties
+hadoop-exercicio/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+hadoop-exercicio/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
