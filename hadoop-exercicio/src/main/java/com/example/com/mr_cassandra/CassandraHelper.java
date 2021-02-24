@@ -16,8 +16,10 @@ public class CassandraHelper {
     private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(CassandraHelper.class);
     private Cluster cluster;
     private Session session;
-    private String query = "INSERT INTO faesamod05keyspace.livro (chave) VALUES(?)"; 
+    private String query = "INSERT INTO <keyspace>.livro (chave) VALUES(?)"; 
+    private String query2 = "INSERT INTO <keyspace>.livro2 (chave,contador) VALUES(?,?)"; 
     private PreparedStatement preparedStatement;
+    private PreparedStatement preparedStatement2;
 
     public Session getSession()  {
          LOG.info("Starting getSession()");
@@ -34,13 +36,13 @@ public class CassandraHelper {
     public void createConnection()  {
 
         this.cluster = Cluster.builder()
-                .addContactPoint("faesamod05cassandra.cassandra.cosmos.azure.com")
+                .addContactPoint("<cassandra host>")
                 .withPort(10350)
-                .withCredentials("faesamod05cassandra", "mDfZXB0PTPY1SJn9JbAd26sPcpOXlg8dlFcy1yMGwjNlJcsWIhDgxgAwUyFSt8fmqN87kysoG83S6fLVmfeHzA==")
+                .withCredentials("<username>", "<password>")
                 .withSSL()
                 .build();     
 
-        this.session = cluster.connect("faesamod05keyspace");
+        this.session = cluster.connect("<keyspace>");
         
         this.prepareQueries();
     }
@@ -54,12 +56,43 @@ public class CassandraHelper {
         this.preparedStatement = this.session.prepare(this.query);
     }
 
+    private void prepareQueries2()  {
+        LOG.info("Starting prepareQueries()");
+        this.preparedStatement2 = this.session.prepare(this.query2);
+
+    }
+
     public void addKey(String key) {
         Session session = this.getSession();
         
         if(key.length()>0) {
             try {
                 session.execute(this.preparedStatement.bind(key) );
+                //session.executeAsync(this.preparedStatement.bind(key));
+            } catch (NoHostAvailableException e) {
+                System.out.printf("No host in the %s cluster can be contacted to execute the query.\n", 
+                        session.getCluster());
+                Session.State st = session.getState();
+                for ( Host host : st.getConnectedHosts() ) {
+                    System.out.println("In flight queries::"+st.getInFlightQueries(host));
+                    System.out.println("open connections::"+st.getOpenConnections(host));
+                }
+
+            } catch (QueryExecutionException e) {
+                System.out.println("An exception was thrown by Cassandra because it cannot " +
+                        "successfully execute the query with the specified consistency level.");
+            }  catch (IllegalStateException e) {
+                System.out.println("The BoundStatement is not ready.");
+            }
+        }
+    }
+
+    public void addPalavraContador(String key, int value) {
+        Session session = this.getSession();
+        
+        if(key.length()>0) {
+            try {
+                session.execute(this.preparedStatement.bind(key,value));
                 //session.executeAsync(this.preparedStatement.bind(key));
             } catch (NoHostAvailableException e) {
                 System.out.printf("No host in the %s cluster can be contacted to execute the query.\n", 

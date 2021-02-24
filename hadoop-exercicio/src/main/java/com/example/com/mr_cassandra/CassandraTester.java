@@ -20,7 +20,12 @@ public class CassandraTester {
         System.out.println("starting writes");
         
         //Add test value
-        client.addKey("test1234");
+        // client.addKey("abcd4r534to340i");
+        // client.addKey("adofjkdogjiro3t");
+        // client.addKey("ofkwopektq4o");
+        // client.addKey("soeifdjaoeirgjoeri");
+
+        client.addPalavraContador("asdokasd", 3);
         
         //Close the connection
         client.closeConnection();
